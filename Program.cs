@@ -6,107 +6,95 @@ Dastur vazifalar ro'yxatini va ularning holatini saqlashi kerak.
  For loop, While loop yoki Forech-dan foydalaning, va Array yoki List-dan foydalaning.
 
 */
+//Tartiblashda Githubdan https://github.com/alexeykrymov/ToDo-List-in-C-/blob/main/Program.cs foydalanildi. 
+//2-3 marotaba o'z kodimga o'ralib qoldim. :)
 using System;
-using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
-namespace Takrorlas
+namespace Takrorlash
 {
-    class Program{
+    class Program
+    {
         static void Main(string[] args)
         {
-            string[] task = new string[100];
-            bool[] isCompleted = new bool[100];
             bool isWorking = true;
+            string[] taskName = new string[10];
             int i = 1;
-        
-            System.Console.WriteLine("Vazifa qo'shish(+, Qo'shish, Yangi)\nVazifa o'chirish(-, o'chirish, olib tashlash, del, delete)");
-            string userInput = Console.ReadLine().ToLower();
-            if(userInput == "+" || userInput == "qoshish" || userInput == "qushish" || userInput == "qo'shish" || userInput == "qo`shish"){
-                while(isWorking && i <= 100)
+            bool[] isCompleted = new bool[10];
+            for(int x = 0; x < 10; x++)
+            {
+                isCompleted[x] = false;
+            }
+
+            while(isWorking)
+            {
+                System.Console.WriteLine("1) Vazifa qo'shish");
+                System.Console.WriteLine("2) Vazifani bajarilgan deb belgilash");
+                System.Console.WriteLine("3) Vazifalar ro'yxati");
+                System.Console.WriteLine("4) Vazifani tahrirlash");
+                System.Console.WriteLine("5) Chiqish");
+
+                int option = Convert.ToInt32(Console.ReadLine());
+
+                switch(option) 
                 {
-                    System.Console.Write($"{i}-vazifa nomini kiriting: ");
-                    task[i] = Console.ReadLine();
-                    System.Console.Write("Yana vazifa kiritasizmi?(Ha/Yo'q) -> ");
-                    string temp = Console.ReadLine().ToLower();
-                    if(temp == "ha" || temp == "ga")
+                    case 1:
                     {
+                        System.Console.WriteLine("Vazifa nomini kiriting: ");
+                        taskName[i] = Console.ReadLine();
                         i++;
-                        isWorking = true;
-                        //temp = ""; // Qayta kelgan sikl shu shartni ichiga kirmasligi uchun
-                    }
-                    else if(temp == "yo'q" || temp == "yuq" || temp == "yoq")
-                    {       
-                            isWorking = false;
-                            //temp = "";
-                                             
-                            System.Console.WriteLine("Sizning vazifalaringiz: ");
-                            System.Console.WriteLine("Vazifa nomi\tVazifa holati");
-                            for(int j = 1; j <= i; j++)
-                            {
-                                System.Console.Write($"{j}) " + task[j] + " => ");
-                                if(isCompleted[j] == false)
-                                {
-                                    System.Console.WriteLine("bajarilmagan");
-                                }
-                                else{
-                                    System.Console.WriteLine("bajarilgan");
-                                }
-                            }
-                            //Vazifalarni ko'rsatish uchun
-                            
-                    }
-                    else{
-                        System.Console.WriteLine("Xatolik!. Dastur tugatildi.");
+                        System.Console.WriteLine("Vazifa jadvalga qo'shildi.");
+                        Console.Clear();   
                         break;
                     }
-                }
-               
-                //Vazifalarni boshqarish qismi:
-               isWorking = true;
-               while(isWorking)
-               {
-                    System.Console.WriteLine("Tahrirlash uchun vazifani tanlang(tartib raqami bo'yicha): ");
-                    i = Convert.ToInt32(Console.ReadLine());
-                    System.Console.WriteLine(task[i] +" - tanlandi. Qaysi parametrni o'zgartiramiz: \n 1) Nomi 2) \nBajarilganlik statusi ");
-                    
-                    switch (Convert.ToInt32(Console.ReadLine()))
+                    case 2:
                     {
-                        case 1: {
-                            System.Console.WriteLine("Yangi nom kiritishingiz mumkin:");
-                                break;
+                        System.Console.WriteLine("Vazifalar ro'yxati:");
+                        for(int j = 1; j < i; j++)
+                        {
+                            Console.WriteLine( j + ") "+ taskName[j] + " - " + (isCompleted[j] ? "bajarilgan" : "bajarilmagan"));
                         }
-                        case 2: {
-                            System.Console.WriteLine("Statusi bajarilgan(+) bo'lsa bajarilmagan(-) ishorasini kiriting: ");
-                            switch(Convert.ToChar(Console.ReadLine())) {
-                                case '+': {
-                                    isCompleted[i] = true;
-                                    System.Console.WriteLine("O'zgartirish muvaffaqiyatli amalga oshirildi.");
-                                    break;
-                                }
-                                case '-':
-                                {
-                                    isCompleted[i] = false;
-                                    System.Console.WriteLine("O'zgartirish muvaffaqiyatli amalga oshirildi.");
-                                    // SHU SIKLNI WHILE BILAN ISHLA
-                                    break;
-                                }
-                                default:
-                                {
-                                    System.Console.WriteLine("Xatolik. Hozirgi holat:");
-                                    
-                                    break;
-                                }
-                            }
-                            break;
+                         System.Console.WriteLine("Bajarilgan belgisini qo'yish uchun vazifa raqamini kiriting:");
+                         int taskNumber = Convert.ToInt32(Console.ReadLine());
+                         if(taskNumber <= i)
+                         {
+                            isCompleted[taskNumber] = true;
+                         }
+                         else{
+                            System.Console.WriteLine("Xato qiymat kiritildi.");
+                         }
+                         break;
+                    }  
+                                 
+                    case 3:
+                    {
+                        for(int j = 1; j < i; j++)
+                        {
+                             Console.WriteLine( j + ") "+ taskName[j] + " - " + (isCompleted[j] ? "bajarilgan" : "bajarilmagan"));
                         }
-                        default: {
-                            System.Console.WriteLine("Xatolik Dastur tugatildi:");
-                            break;
+                        break;
+                    }     
+                    case 4:
+                    {
+                        System.Console.WriteLine("Nomini o'zgartirmoqchi bo'lgan vazifani tanlang: ");
+                        for(int j = 1; j < i; j++)
+                        {
+                             Console.WriteLine( j + ") "+ taskName[j]);
                         }
-                } 
-                
-            }   
+                        int tempOption = Convert.ToInt32(Console.ReadLine());
+                        if(tempOption < i)
+                        {
+                            System.Console.Write($"{tempOption} - ");
+                            taskName[tempOption] = Console.ReadLine(); 
+                        }
+                        break;
+                    }     
+                    case 5:
+                    {
+                        isWorking = false;
+                        break; 
+                    }
+                }
+             
+            }
         }
-    }   
-}
+    }
 }
